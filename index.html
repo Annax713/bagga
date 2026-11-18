@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BAGGA - Cricket Premium</title>
 
-<!-- Meta Pixel Code - SIRF EK PIXEL RAKHNA -->
+<!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -42,8 +42,56 @@ body{background:#000;display:flex;justify-content:center;color:#fff;}
 .card{display:flex;gap:14px;align-items:center;background:#0f1b33;border:1px solid #1e2f57;border-radius:14px;padding:18px 14px;margin-bottom:14px;}
 .card b{font-size:15px;font-weight:800;}
 .card span{font-size:12px;color:#a6b3cc;display:block;margin-top:3px;}
-.btn{width:100%;margin-top:30px;background:#0d84ff;color:#fff;text-align:center;padding:18px 0;border-radius:14px;font-size:20px;font-weight:900;text-decoration:none;display:block;position:relative;overflow:hidden;animation:blinkBtn 1s infinite;}
-@keyframes blinkBtn{0%,100%{opacity:1}50%{opacity:.8}}
+
+/* ===== BLINKING JOIN BUTTON - YAHI MAIN HAI ===== */
+.btn{
+width:100%;
+margin-top:30px;
+background:linear-gradient(90deg,#0d84ff,#4da6ff,#0d84ff,#00c6ff);
+background-size:200% 100%;
+color:#fff;
+text-align:center;
+padding:20px 0;
+border-radius:14px;
+font-size:22px;
+font-weight:900;
+text-decoration:none;
+display:block;
+position:relative;
+overflow:hidden;
+animation:blinkBtn 0.9s infinite, shineBtn 1.8s infinite linear, pulseBtn 1.2s infinite;
+box-shadow:0 0 25px rgba(13,132,255,.9);
+}
+/* 1. Blink - light tez / dheemi */
+@keyframes blinkBtn{
+0%,100%{opacity:1; box-shadow:0 0 25px rgba(13,132,255,.9)}
+50%{opacity:.75; box-shadow:0 0 45px rgba(255,255,255,1)}
+}
+/* 2. Shine - chamak left to right */
+@keyframes shineBtn{
+0%{background-position:0% 0}
+100%{background-position:200% 0}
+}
+/* 3. Pulse - halka bada-chota */
+@keyframes pulseBtn{
+0%{transform:scale(1)}
+50%{transform:scale(1.04)}
+100%{transform:scale(1)}
+}
+/* 4. White sweep - ekdum chamak */
+.btn::after{
+content:'';
+position:absolute;
+top:0;left:-80%;
+width:50%;height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);
+transform:skewX(-20deg);
+animation:sweep 1.4s infinite;
+}
+@keyframes sweep{
+0%{left:-80%}
+100%{left:130%}
+}
 .btn.disabled{pointer-events:none;opacity:.6}
 </style>
 </head>
@@ -65,29 +113,19 @@ body{background:#000;display:flex;justify-content:center;color:#fff;}
     <div class="card"><div><b>BAGGA Special Community</b><span>Exclusive polls & discussions</span></div></div>
     <div class="card"><div><b>BAGGA Army</b><span>Join our community squad</span></div></div>
   </div>
-  <a class="btn" href="https://t.me/+SSvc97geCbdmN2Rl" target="_blank" id="joinBtn">JOIN NOW</a>
+  <a class="btn" href="https://t.me/+SSvc97geCbdmN2Rl" target="_blank" id="joinBtn">JOIN NOW →</a>
   <p style="text-align:center;font-size:11px;color:#666;margin-top:12px;">Free To Join • Safe & Friendly • Daily Updates</p>
 </div>
 
 <script>
-// FIX: Ek hi baar Lead fire hoga, double click nahi ginega
 let clicked = false;
 document.getElementById('joinBtn').addEventListener('click', function(e){
-  if(clicked){
-    e.preventDefault();
-    return;
-  }
+  if(clicked){ e.preventDefault(); return; }
   clicked = true;
   this.classList.add('disabled');
   this.textContent = 'OPENING...';
-  try{
-    fbq('track','Lead');
-    fbq('track','CompleteRegistration');
-  }catch(err){}
-  // 800ms baad hi Telegram khulega taaki Pixel track ho jaye
-  setTimeout(function(){
-    window.open('https://t.me/+SSvc97geCbdmN2Rl','_blank');
-  }, 800);
+  try{ fbq('track','Lead'); fbq('track','CompleteRegistration'); }catch(err){}
+  setTimeout(function(){ window.open('https://t.me/+SSvc97geCbdmN2Rl','_blank'); }, 800);
   e.preventDefault();
 });
 </script>
